@@ -1,0 +1,8 @@
+<!-- patients.component.html -->
+<div *ngIf="patients$ | async as data; else loading">
+    Total count: {{data.totalCount}}
+    <div *ngFor="let patient of data.patients">
+      {{patient | json}}
+    </div>
+  </div>
+  <ng-template #loading>Loading...</ng-template>
