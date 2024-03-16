@@ -1,0 +1,74 @@
+<div class="container">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="pId">Patient ID *</label>
+    <input class="form-control" id="pId" type="text" formControlName="pId">
+    <div class="error-message">
+      <div *ngIf="hasError('pId', 'required')">Patient ID is required</div>
+      <div *ngIf="hasError('pId', 'minlength')">Patient ID must be at least 1 characters</div>
+      <div *ngIf="hasError('pId', 'maxlength')">Patient ID must be at most 10 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Name *</label>
+    <input class="form-control" id="name" type="text" formControlName="name">
+    <div class="error-message">
+      <div *ngIf="hasError('name', 'required')">Name is required</div>
+      <div *ngIf="hasError('name', 'minlength')">Name must be at least 3 characters</div>
+      <div *ngIf="hasError('name', 'maxlength')">Name must be at most 100 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address</label>
+    <textarea class="form-control" id="address" formControlName="address"></textarea>
+    <div class="error-message">
+      <div *ngIf="hasError('address', 'maxlength')">Name must be at most 100 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="contactNumber">Contact Number *</label>
+    <input class="form-control" id="contactNumber" type="text" formControlName="contactNumber">
+    <div class="error-message">
+      <div *ngIf="hasError('contactNumber', 'required')">Contact number is required</div>
+      <div *ngIf="hasError('contactNumber', 'minlength')">Contact number must be at least 10 characters</div>
+      <div *ngIf="hasError('contactNumber', 'maxlength')">Contact number must be at most 10 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input class="form-control" id="email" type="email" formControlName="email">
+    <div class="error-message">
+      <div *ngIf="hasError('email', 'email')">Email is not valid</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="dateOfBirth">Date of Birth *</label>
+    <input class="form-control" id="dateOfBirth" type="date" formControlName="dateOfBirth">
+    <div class="error-message">
+      <div *ngIf="hasError('dateOfBirth', 'required')">Date of birth is required</div>
+      <div *ngIf="hasError('dateOfBirth', 'pastDate')">Date of birth cannot be in the future</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="placeOfBirth">Place of Birth</label>
+    <input class="form-control" id="placeOfBirth" type="text" formControlName="placeOfBirth">
+    <div class="error-message">
+      <div *ngIf="hasError('placeOfBirth', 'maxlength')">Place of birth must be at most 100 characters</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="timeOfBirth">Time of Birth</label>
+    <input class="form-control" id="timeOfBirth" type="time" formControlName="timeOfBirth">
+    <div class="error-message"></div>
+  </div>
+
+  <button class="btn" [ngClass]="{'btn-primary': !form.invalid, 'btn-secondary': form.invalid}" type="submit" [disabled]="form.invalid">Submit</button>
+</form>
+</div>

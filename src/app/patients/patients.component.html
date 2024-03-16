@@ -1,8 +1,39 @@
-<!-- patients.component.html -->
-<div *ngIf="patients$ | async as data; else loading">
-    Total count: {{data.totalCount}}
-    <div *ngFor="let patient of data.patients">
-      {{patient | json}}
+<div class="container">
+  <div class="d-flex bd-highlight mb-3">
+    <div class="p-2 bd-highlight">Search on Patient Id, Name and Contact Number:</div>
+    <div class="p-2 bd-highlight">
+      <input type="text" placeholder="Search" (input)="onSearch($event)">
+    </div>
+    <div class="ml-auto p-2 bd-highlight">
+      <button class="btn btn-primary" [routerLink]="['/', 'patient']">Add Patient</button>
     </div>
   </div>
+  
+  <ng-container *ngIf="patients$ | async as data; else loading">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Patient Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Contact Number</th>
+          <th scope="col">Age</th>
+          <th scope="col">Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of data.patients">
+          <td scope="row">{{ patient.patientId }}</td>
+          <td>{{ patient.name }}</td>
+          <td>{{ patient.contactNumber }}</td>
+          <td>{{ patient.age }}</td>
+          <td>{{ patient.updatedDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="data.totalCount" [page]="page" [pageSize]="limit" (pageChange)="onPageChange($event)">
+    </ngb-pagination>
+  </div>
+  </ng-container>
   <ng-template #loading>Loading...</ng-template>
+</div>

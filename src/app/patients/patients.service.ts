@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Patient } from './patient';
 import { Observable, map } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,21 @@ export class PatientsService {
     private http: HttpClient
   ) { }
 
-  getPatients() {
-    return this.http.get('http://localhost:3000/patient').pipe(
+  getPatients(page: number, limit: number, searchTerm: string = ''): Observable<any> {
+    const params = new HttpParams()
+    .set('page', page)
+    .set('limit', limit)
+    .set('searchTerm', searchTerm);
+    return this.http.get('http://localhost:3000/patient', { params }).pipe(
       map((res: any) => {
         return {
-          patients: res.patients.map((patient: { id: any; name: any; email: any; }) => ({
+          patients: res.patients.map((patient: Patient) => ({
             id: patient.id,
+            patientId: patient.pId,
             name: patient.name,
-            email: patient.email
+            contactNumber: patient.contactNumber,
+            age: new Date().getFullYear() - new Date(patient.dateOfBirth).getFullYear(),
+            updatedDate: moment(patient.updatedDate).format('DD-MM-YYYY')
           })),
           totalCount: res.totalCount
         };
